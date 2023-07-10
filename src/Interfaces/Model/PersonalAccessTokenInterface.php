@@ -35,11 +35,6 @@ interface PersonalAccessTokenInterface extends AbstractModelInterface
     // ? Getter Modules
 
     /**
-     * Get id
-     */
-    public function getId(): int|null;
-
-    /**
      * Get tokenable type
      */
     public function getTokenableType(): string|null;
@@ -75,11 +70,6 @@ interface PersonalAccessTokenInterface extends AbstractModelInterface
     public function getExpiresAt(): Carbon|null;
 
     // ? Setter Modules
-
-    /**
-     * Set id
-     */
-    public function setId(int $id): self;
 
     /**
      * Set tokenable type

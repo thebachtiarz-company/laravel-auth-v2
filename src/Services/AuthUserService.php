@@ -112,10 +112,9 @@ class AuthUserService extends AbstractService
             }
 
             $authUser = $this->authUserRepository->setUserModel($this->getUserModel())->getByIdentifier($email);
-            assert($authUser instanceof AuthUserInterface);
+            assert($authUser instanceof AuthUserInterface || $authUser instanceof AbstractAuthUser);
             $authUser->setEmailVerifiedAt(CarbonHelper::dbDateTime());
 
-            assert($authUser instanceof AbstractAuthUser);
             $update = $this->authUserRepository->setUserModel($this->getUserModel())->save($authUser);
 
             $result = $update->simpleListMap();
@@ -140,7 +139,7 @@ class AuthUserService extends AbstractService
     {
         try {
             $authUser = $this->authUserRepository->setUserModel($this->getUserModel())->getByIdentifier($identifier);
-            assert($authUser instanceof AuthUserInterface);
+            assert($authUser instanceof AuthUserInterface || $authUser instanceof AbstractAuthUser);
 
             // Verify current password
             $verifyCurrentPassword = Hash::check(
@@ -153,8 +152,6 @@ class AuthUserService extends AbstractService
             }
 
             $authUser->setPassword(password: $newPassword, hashed: true);
-
-            assert($authUser instanceof AbstractAuthUser);
 
             // Update password
             $update = $this->authUserRepository->setUserModel($this->getUserModel())->save($authUser);
@@ -193,11 +190,9 @@ class AuthUserService extends AbstractService
     protected function createUserProcess(string $identifier, string $password): AbstractAuthUser
     {
         $userPrepare = app(AuthUser::class);
-        assert($userPrepare instanceof AuthUserInterface);
+        assert($userPrepare instanceof AuthUserInterface || $userPrepare instanceof AbstractAuthUser);
         $userPrepare->setIdentifier($identifier);
         $userPrepare->setPassword($password);
-
-        assert($userPrepare instanceof AbstractAuthUser);
 
         return $this->authUserRepository->setUserModel($this->getUserModel())->create($userPrepare);
     }
@@ -235,7 +230,7 @@ class AuthUserService extends AbstractService
                     string: $abstractAuthUser->getPassword(true),
                     character: '*',
                     index: 2,
-                    length: mb_strlen($abstractAuthUser->getPassword(true)) - (2 + 2),
+                    length: mb_strlen($abstractAuthUser->getPassword(true) ?? '') - (2 + 2),
                 ),
             ],
         );

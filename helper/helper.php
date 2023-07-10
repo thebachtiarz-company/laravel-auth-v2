@@ -60,3 +60,13 @@ if (! function_exists('authidentifiermethod')) {
         };
     }
 }
+
+if (! function_exists('tbauthrestapipath')) {
+    /**
+     * Auth rest api path
+     */
+    function tbauthrestapipath(): string
+    {
+        return base_path('vendor/thebachtiarz-company/laravel-auth-v2/src/routes/auth_rest.php');
+    }
+}

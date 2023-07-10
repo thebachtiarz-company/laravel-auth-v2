@@ -127,10 +127,9 @@ class TokenResetService extends AbstractService
             $authUser = $this->authUserRepository
                 ->setUserModel($this->getUserModel())
                 ->getByIdentifier($tokenReset->getIdentifier());
-            assert($authUser instanceof AuthUserInterface);
+            assert($authUser instanceof AuthUserInterface || $authUser instanceof AbstractAuthUser);
             $authUser->setPassword($newPassword);
 
-            assert($authUser instanceof AbstractAuthUser);
             $updateUser = $this->authUserRepository->save($authUser);
 
             $this->personalAccessTokenRepository->setCurrentUser($updateUser)->deleteByUser();

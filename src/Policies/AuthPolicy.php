@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace TheBachtiarz\Auth\Policies;
 
+use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\NewAccessToken;
+use TheBachtiarz\Auth\Interfaces\Model\AuthUserInterface;
 use TheBachtiarz\Auth\Models\AbstractAuthUser;
 use TheBachtiarz\Auth\Models\AuthUser;
 use TheBachtiarz\Auth\Models\PersonalAccessToken;
@@ -17,6 +19,7 @@ use TheBachtiarz\Auth\Traits\Attribute\UserModelAttributeTrait;
 use function app;
 use function array_merge;
 use function assert;
+use function sprintf;
 
 class AuthPolicy
 {
@@ -58,12 +61,19 @@ class AuthPolicy
      */
     public function createSession(): AbstractAuthUser
     {
-        $authUser = $this->authUserRepository->setUserModel($this->getUserModel())->getByIdentifier($this->getIdentifier());
-        assert($authUser instanceof AbstractAuthUser);
+        Auth::attempt(
+            credentials: [
+                authidentifiermethod() => $this->getIdentifier(),
+                AuthUserInterface::ATTRIBUTE_PASSWORD => $this->getPassword(),
+            ],
+            remember: true,
+        );
 
-        Auth::login(user: $authUser, remember: true);
+        if (! Auth::hasUser()) {
+            throw new Exception('Credential not found!');
+        }
 
-        return authuser($authUser);
+        return authuser($this->getUserModel());
     }
 
     /**
@@ -74,7 +84,23 @@ class AuthPolicy
         $userSession = $this->createSession();
         assert($userSession instanceof AbstractAuthUser);
 
-        $token = $this->personalAccessTokenRepository->setCurrentUser($userSession)->createToken($this->getTokenAbilities() ?? ['*']);
+        if (tbauthconfig(keyName: 'single_device_only', useOrigin: false)) {
+            $userSession->tokens()->delete();
+        }
+
+        if (tbauthconfig(keyName: 'limit_user_login', useOrigin: false)) {
+            $userTokenCount    = $userSession->tokens()->count();
+            $tokenLimitAllowed = (int) tbauthconfig(keyName: 'max_user_login', useOrigin: false);
+
+            if ($userTokenCount >= $tokenLimitAllowed) {
+                throw new Exception(sprintf(
+                    'User login has reached the limit of %s time(s)',
+                    $tokenLimitAllowed,
+                ));
+            }
+        }
+
+        $token = $this->personalAccessTokenRepository->createToken($this->getTokenAbilities() ?? ['*']);
         assert($token instanceof NewAccessToken);
 
         return $token;
@@ -113,7 +139,7 @@ class AuthPolicy
      */
     public function tokenToArray(NewAccessToken $newAccessToken): array
     {
-        $tokenEntity = $newAccessToken->accessToken;
+        $tokenEntity = new PersonalAccessToken($newAccessToken?->accessToken->toArray());
         assert($tokenEntity instanceof PersonalAccessToken);
 
         return array_merge(

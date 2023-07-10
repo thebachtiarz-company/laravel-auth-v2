@@ -11,6 +11,7 @@ use TheBachtiarz\Auth\Interfaces\Model\AuthUserInterface;
 use TheBachtiarz\Auth\Traits\Model\AuthUserMapTrait;
 use TheBachtiarz\Auth\Traits\Model\AuthUserScopeTrait;
 use TheBachtiarz\Base\App\Helpers\CarbonHelper;
+use TheBachtiarz\Base\App\Helpers\TemporaryDataHelper;
 
 class AuthUser extends AbstractAuthUser implements AuthUserInterface
 {
@@ -24,11 +25,6 @@ class AuthUser extends AbstractAuthUser implements AuthUserInterface
      * example: \TheBachtiarz\Base\App\Helpers\CarbonHelper::dbGetFullDateAddHours(1) -> to add 1 hour after token created.
      */
     protected Carbon|null $tokenExpiresAt = null;
-
-    /**
-     * Un-Hashed password
-     */
-    private string|null $unHashedPassword = null;
 
     /**
      * Constructor
@@ -72,7 +68,7 @@ class AuthUser extends AbstractAuthUser implements AuthUserInterface
      */
     public function getPassword(bool|null $unHashed = false): string|null
     {
-        return $unHashed ? $this->unHashedPassword : $this->__get(self::ATTRIBUTE_PASSWORD);
+        return $unHashed ? TemporaryDataHelper::getData(self::TEMP_UNHASHED_PASSWORD) : $this->__get(self::ATTRIBUTE_PASSWORD);
     }
 
     /**
@@ -111,7 +107,7 @@ class AuthUser extends AbstractAuthUser implements AuthUserInterface
     public function setPassword(string $password, bool|null $hashed = true): self
     {
         $this->__set(self::ATTRIBUTE_PASSWORD, $hashed ? Hash::make($password) : $password);
-        $this->unHashedPassword = $password;
+        TemporaryDataHelper::addData(self::TEMP_UNHASHED_PASSWORD, $password);
 
         return $this;
     }

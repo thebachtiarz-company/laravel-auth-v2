@@ -98,7 +98,7 @@ class PersonalAccessTokenService extends AbstractService
                 ResponseHelper::asPaginate(
                     perPage: PaginatorParam::setPerPage(10)->getPerPage(),
                     currentPage: PaginatorParam::setCurrentPage(1)->getCurrentPage(),
-                    sortOptions: PaginatorParam::addResultSortOption(attributeName: 'created')->getResultSortOptions(),
+                    sortOptions: PaginatorParam::addResultSortOption(attributeName: 'created')->getResultSortOptions(asMultiple: true),
                 );
             }
 

@@ -28,6 +28,8 @@ interface AuthUserInterface extends AbstractModelInterface
     public const ATTRIBUTE_EMAIL_VERIFIED_AT = 'email_verified_at';
     public const ATTRIBUTE_PASSWORD          = 'password';
 
+    public const TEMP_UNHASHED_PASSWORD = 'unhashed_password';
+
     // ? Getter Modules
 
     /**

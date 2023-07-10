@@ -49,7 +49,7 @@ class AuthUserRepository extends AbstractRepository
     public function getById(int $id): AbstractAuthUser
     {
         $authUser = $this->getUserModel()::find($id);
-        assert($authUser instanceof AbstractAuthUser);
+        assert($authUser instanceof AbstractAuthUser || $authUser === null);
 
         if (! $authUser) {
             throw new ModelNotFoundException(sprintf("User with id '%s' not found", $id));
@@ -64,7 +64,7 @@ class AuthUserRepository extends AbstractRepository
     public function getByIdentifier(string $identifier): AbstractAuthUser
     {
         $authUser = $this->getUserModel()::getByIdentifier($identifier)->first();
-        assert($authUser instanceof AbstractAuthUser);
+        assert($authUser instanceof AbstractAuthUser || $authUser === null);
 
         if (! $authUser) {
             throw new ModelNotFoundException(sprintf("User with identifier '%s' not found", $identifier));

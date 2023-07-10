@@ -9,6 +9,7 @@ use TheBachtiarz\Auth\Models\AuthUser;
 use TheBachtiarz\Base\BaseConfigInterface;
 
 use function array_merge;
+use function config;
 use function tbbaseconfig;
 
 class DataProvider
@@ -25,6 +26,15 @@ class DataProvider
 
         // ! Auth
         $registerConfig[] = ['auth.providers.users.model' => AuthUser::class];
+
+        // ! Providers
+        $_providers       = config('app.providers');
+        $registerConfig[] = [
+            'app.providers' => array_merge(
+                $_providers,
+                [AuthRouteServiceProvider::class],
+            ),
+        ];
 
         // ! library configs
         $configRegistered = tbbaseconfig(BaseConfigInterface::CONFIG_REGISTERED);

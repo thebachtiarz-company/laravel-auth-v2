@@ -19,6 +19,7 @@ use TheBachtiarz\Base\App\Repositories\AbstractRepository;
 
 use function app;
 use function assert;
+use function authuser;
 
 class PersonalAccessTokenRepository extends AbstractRepository
 {
