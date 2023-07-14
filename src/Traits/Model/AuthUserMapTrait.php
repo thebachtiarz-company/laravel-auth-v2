@@ -25,11 +25,15 @@ trait AuthUserMapTrait
         $defaultAttributes = [
             authidentifiermethod(),
             'created',
+            'updated',
         ];
 
         $this->setData(
             attribute: 'created',
             value: CarbonHelper::anyConvDateToTimestamp(datetime: $this->getCreatedAt()),
+        )->setData(
+            attribute: 'updated',
+            value: CarbonHelper::anyConvDateToTimestamp(datetime: $this->getUpdatedAt()),
         );
 
         $this->makeHidden([

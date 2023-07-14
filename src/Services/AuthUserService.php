@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TheBachtiarz\Auth\Services;
 
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use TheBachtiarz\Auth\Interfaces\Model\AuthUserInterface;
@@ -43,11 +44,11 @@ class AuthUserService extends AbstractService
             $this->setUserModel(app(AuthUser::class));
         }
 
-        if ($this->getIdentifierMethod()) {
-            return;
+        if (! $this->getIdentifierMethod()) {
+            $this->setIdentifierMethod(authidentifiermethod());
         }
 
-        $this->setIdentifierMethod(authidentifiermethod());
+        $this->getUserModel();
     }
 
     /**
@@ -151,6 +152,8 @@ class AuthUserService extends AbstractService
                 throw new Exception('Failed to verify current password');
             }
 
+            DB::beginTransaction();
+
             $authUser->setPassword(password: $newPassword, hashed: true);
 
             // Update password
@@ -159,12 +162,15 @@ class AuthUserService extends AbstractService
             // Revoke all token belongs to user
             $this->personalAccessTokenRepository->setCurrentUser($authUser)->deleteByUser();
 
+            DB::commit();
+
             $result = $update->simpleListMap();
 
             $this->setResponseData(message: 'Successfully update password', data: $result, httpCode: 201);
 
             return $this->serviceResult(status: true, message: 'Successfully update password', data: $result);
         } catch (Throwable $th) {
+            DB::rollBack();
             $this->log($th);
             $this->setResponseData(message: $th->getMessage(), status: 'error', httpCode: 202);
 

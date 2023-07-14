@@ -20,9 +20,7 @@ abstract class AbstractAuthUser extends User implements AbstractModelInterface
     // ? Public Methods
 
     /**
-     * Get data.
-     *
-     * Get by attribute or return whole data.
+     * Get data
      */
     public function getData(string $attribute): mixed
     {
@@ -30,9 +28,7 @@ abstract class AbstractAuthUser extends User implements AbstractModelInterface
     }
 
     /**
-     * Set data.
-     *
-     * Set data using attribute and value exist.
+     * Set data
      *
      * @return static
      */

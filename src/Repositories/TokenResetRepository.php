@@ -52,7 +52,7 @@ class TokenResetRepository extends AbstractRepository
      */
     public function getByToken(string $token): TokenResetInterface
     {
-        $entity = TokenReset::getByToken($token);
+        $entity = TokenReset::getByToken($token)->first();
         assert($entity instanceof TokenResetInterface);
 
         if (! $entity) {

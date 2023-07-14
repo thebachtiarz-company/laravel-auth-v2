@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace TheBachtiarz\Auth\Services;
 
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use TheBachtiarz\Auth\Interfaces\Model\AuthUserInterface;
 use TheBachtiarz\Auth\Interfaces\Model\TokenResetInterface;
 use TheBachtiarz\Auth\Models\AbstractAuthUser;
+use TheBachtiarz\Auth\Models\AuthUser;
 use TheBachtiarz\Auth\Models\TokenReset;
 use TheBachtiarz\Auth\Repositories\AuthUserRepository;
 use TheBachtiarz\Auth\Repositories\PersonalAccessTokenRepository;
@@ -100,11 +102,11 @@ class TokenResetService extends AbstractService
     }
 
     /**
-     * Update user password
+     * Reset user password
      *
      * @return array
      */
-    public function updateUserPassword(
+    public function resetUserPassword(
         string $token,
         string $newPassword,
     ): array {
@@ -124,6 +126,8 @@ class TokenResetService extends AbstractService
                 throw new Exception('Access for reset password already expired');
             }
 
+            DB::beginTransaction();
+
             $authUser = $this->authUserRepository
                 ->setUserModel($this->getUserModel())
                 ->getByIdentifier($tokenReset->getIdentifier());
@@ -133,6 +137,9 @@ class TokenResetService extends AbstractService
             $updateUser = $this->authUserRepository->save($authUser);
 
             $this->personalAccessTokenRepository->setCurrentUser($updateUser)->deleteByUser();
+            $this->tokenResetRepository->deleteByIdentifier($tokenReset->getIdentifier());
+
+            DB::commit();
 
             $result = $updateUser->simpleListMap();
 
@@ -140,6 +147,7 @@ class TokenResetService extends AbstractService
 
             return $this->serviceResult(status: true, message: 'Successfully update user password', data: $result);
         } catch (Throwable $th) {
+            DB::rollBack();
             $this->log($th);
             $this->setResponseData(message: $th->getMessage(), status: 'error', httpCode: 202);
 

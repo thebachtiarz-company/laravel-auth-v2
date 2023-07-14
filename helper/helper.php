@@ -67,6 +67,6 @@ if (! function_exists('tbauthrestapipath')) {
      */
     function tbauthrestapipath(): string
     {
-        return base_path('vendor/thebachtiarz-company/laravel-auth-v2/src/routes/auth_rest.php');
+        return base_path('vendor/thebachtiarz-company/laravel-auth-v2/src/routes/rest.php');
     }
 }

@@ -42,7 +42,7 @@ interface TokenResetInterface extends AbstractModelInterface
     /**
      * Get expires at
      */
-    public function getExpiresAt(): string|null;
+    public function getExpiresAt(): Carbon|string|null;
 
     // ? Setter Modules
 
@@ -59,5 +59,5 @@ interface TokenResetInterface extends AbstractModelInterface
     /**
      * Set expires at
      */
-    public function setExpiresAt(Carbon $expiresAt): self;
+    public function setExpiresAt(Carbon|string $expiresAt): self;
 }

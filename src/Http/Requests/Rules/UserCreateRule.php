@@ -8,7 +8,7 @@ use TheBachtiarz\Base\App\Http\Requests\Rule\AbstractRule;
 
 use function array_merge;
 
-class TokenCreateRule extends AbstractRule
+class UserCreateRule extends AbstractRule
 {
     public static function rules(): array
     {

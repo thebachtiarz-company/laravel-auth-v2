@@ -51,7 +51,7 @@ class TokenReset extends AbstractModel implements TokenResetInterface
     /**
      * Get expires at
      */
-    public function getExpiresAt(): string|null
+    public function getExpiresAt(): Carbon|string|null
     {
         return $this->__get(self::ATTRIBUTE_EXPIRESAT);
     }
@@ -81,7 +81,7 @@ class TokenReset extends AbstractModel implements TokenResetInterface
     /**
      * Set expires at
      */
-    public function setExpiresAt(Carbon $expiresAt): self
+    public function setExpiresAt(Carbon|string $expiresAt): self
     {
         $this->__set(self::ATTRIBUTE_EXPIRESAT, $expiresAt);
 
