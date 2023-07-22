@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TheBachtiarz\Auth;
 
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
-use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
+use TheBachtiarz\Auth\Interfaces\Configs\AuthConfigInterface;
 use TheBachtiarz\Auth\Providers\AppsProvider;
 
 use function app;

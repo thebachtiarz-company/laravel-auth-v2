@@ -5,26 +5,20 @@ declare(strict_types=1);
 namespace TheBachtiarz\Auth\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
-use TheBachtiarz\Auth\Interfaces\Model\AuthUserInterface;
-use TheBachtiarz\Auth\Traits\Model\AuthUserMapTrait;
-use TheBachtiarz\Auth\Traits\Model\AuthUserScopeTrait;
+use TheBachtiarz\Auth\Interfaces\Models\AuthUserInterface;
+use TheBachtiarz\Auth\Traits\Models\AuthUserMapTrait;
+use TheBachtiarz\Auth\Traits\Models\AuthUserScopeTrait;
 use TheBachtiarz\Base\App\Helpers\CarbonHelper;
 use TheBachtiarz\Base\App\Helpers\TemporaryDataHelper;
+
+use function authidentifiermethod;
 
 class AuthUser extends AbstractAuthUser implements AuthUserInterface
 {
     use SoftDeletes;
     use AuthUserScopeTrait;
     use AuthUserMapTrait;
-
-    /**
-     * Define token expires at.
-     *
-     * example: \TheBachtiarz\Base\App\Helpers\CarbonHelper::dbGetFullDateAddHours(1) -> to add 1 hour after token created.
-     */
-    protected Carbon|null $tokenExpiresAt = null;
 
     /**
      * Constructor
@@ -64,7 +58,7 @@ class AuthUser extends AbstractAuthUser implements AuthUserInterface
     /**
      * Get password
      *
-     * @param bool|null $unHashed If true, will return un-hashed password
+     * @param bool|null $unHashed If true, will return un-hashed password when create new user
      */
     public function getPassword(bool|null $unHashed = false): string|null
     {

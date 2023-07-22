@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TheBachtiarz\Auth\Interfaces\Config;
+namespace TheBachtiarz\Auth\Interfaces\Configs;
 
 interface AuthConfigInterface
 {

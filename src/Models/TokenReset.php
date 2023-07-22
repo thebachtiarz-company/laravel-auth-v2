@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace TheBachtiarz\Auth\Models;
 
 use Illuminate\Support\Carbon;
-use TheBachtiarz\Auth\Interfaces\Model\TokenResetInterface;
-use TheBachtiarz\Auth\Traits\Model\TokenResetScopeTrait;
+use TheBachtiarz\Auth\Interfaces\Models\TokenResetInterface;
+use TheBachtiarz\Auth\Traits\Models\TokenResetScopeTrait;
 use TheBachtiarz\Base\App\Models\AbstractModel;
 
 class TokenReset extends AbstractModel implements TokenResetInterface

@@ -12,7 +12,7 @@ use TheBachtiarz\Auth\Http\Requests\Rules\EmailVerificationRule;
 use TheBachtiarz\Auth\Http\Requests\Rules\IdentifierRule;
 use TheBachtiarz\Auth\Http\Requests\Rules\PasswordRule;
 use TheBachtiarz\Auth\Services\AuthUserService;
-use TheBachtiarz\Base\App\Controllers\AbstractController;
+use TheBachtiarz\Base\App\Http\Controllers\AbstractController;
 
 class UserController extends AbstractController
 {

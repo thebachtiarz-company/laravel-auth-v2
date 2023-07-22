@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace TheBachtiarz\Auth\Models;
 
+use Illuminate\Contracts\Database\Query\Builder as BuilderContract;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\PersonalAccessToken as SanctumPersonalAccessToken;
-use TheBachtiarz\Auth\Interfaces\Model\PersonalAccessTokenInterface;
-use TheBachtiarz\Auth\Traits\Model\PersonalAccessTokenMapTrait;
-use TheBachtiarz\Auth\Traits\Model\PersonalAccessTokenScopeTrait;
+use TheBachtiarz\Auth\Interfaces\Models\PersonalAccessTokenInterface;
+use TheBachtiarz\Auth\Traits\Models\PersonalAccessTokenMapTrait;
+use TheBachtiarz\Auth\Traits\Models\PersonalAccessTokenScopeTrait;
 
 class PersonalAccessToken extends SanctumPersonalAccessToken implements PersonalAccessTokenInterface
 {
@@ -109,7 +113,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
     /**
      * Get last used at
      */
-    public function getLastUsedAt(): Carbon|null
+    public function getLastUsedAt(): Carbon|string|null
     {
         return $this->__get(self::ATTRIBUTE_LASTUSEDAT);
     }
@@ -117,7 +121,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
     /**
      * Get expires at
      */
-    public function getExpiresAt(): Carbon|null
+    public function getExpiresAt(): Carbon|string|null
     {
         return $this->__get(self::ATTRIBUTE_EXPIRESAT);
     }
@@ -205,7 +209,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
     /**
      * Set last used at
      */
-    public function setLastUsedAt(Carbon $lastUsedAt): self
+    public function setLastUsedAt(Carbon|string $lastUsedAt): self
     {
         $this->__set(self::ATTRIBUTE_LASTUSEDAT, $lastUsedAt);
 
@@ -215,10 +219,28 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
     /**
      * Set expires at
      */
-    public function setExpiresAt(Carbon $expiresAt): self
+    public function setExpiresAt(Carbon|string $expiresAt): self
     {
         $this->__set(self::ATTRIBUTE_EXPIRESAT, $expiresAt);
 
         return $this;
+    }
+
+    // ? Scope Modules
+
+    /**
+     * Get entity by attribute
+     */
+    public function scopeGetByAttribute(
+        EloquentBuilder|QueryBuilder $builder,
+        string $column,
+        mixed $value,
+        string $operator = '=',
+    ): BuilderContract {
+        return $builder->where(
+            column: DB::raw("BINARY `$column`"),
+            operator: $operator,
+            value: $value,
+        );
     }
 }

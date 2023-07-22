@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TheBachtiarz\Auth\Http\Requests\Rules;
 
-use TheBachtiarz\Base\App\Http\Requests\Rule\AbstractRule;
+use TheBachtiarz\Base\App\Http\Requests\Rules\AbstractRule;
 
 use function array_merge;
 use function sprintf;

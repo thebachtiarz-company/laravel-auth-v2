@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace TheBachtiarz\Auth\Traits\Model;
+namespace TheBachtiarz\Auth\Traits\Models;
 
-use TheBachtiarz\Auth\Interfaces\Model\PersonalAccessTokenInterface;
+use TheBachtiarz\Auth\Interfaces\Models\PersonalAccessTokenInterface;
 use TheBachtiarz\Auth\Models\PersonalAccessToken;
 use TheBachtiarz\Base\App\Helpers\CarbonHelper;
 

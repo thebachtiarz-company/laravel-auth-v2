@@ -8,18 +8,21 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\NewAccessToken;
-use TheBachtiarz\Auth\Interfaces\Model\AuthUserInterface;
+use TheBachtiarz\Auth\Interfaces\Models\AuthUserInterface;
 use TheBachtiarz\Auth\Models\AbstractAuthUser;
 use TheBachtiarz\Auth\Models\AuthUser;
 use TheBachtiarz\Auth\Models\PersonalAccessToken;
 use TheBachtiarz\Auth\Repositories\AuthUserRepository;
 use TheBachtiarz\Auth\Repositories\PersonalAccessTokenRepository;
-use TheBachtiarz\Auth\Traits\Attribute\UserModelAttributeTrait;
+use TheBachtiarz\Auth\Traits\Attributes\UserModelAttributeTrait;
 
 use function app;
 use function array_merge;
 use function assert;
+use function authidentifiermethod;
+use function authuser;
 use function sprintf;
+use function tbauthconfig;
 
 class AuthPolicy
 {

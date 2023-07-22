@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TheBachtiarz\Auth\Traits\Model;
+namespace TheBachtiarz\Auth\Traits\Models;
 
 use Illuminate\Contracts\Database\Query\Builder as BuilderContract;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
-use TheBachtiarz\Auth\Interfaces\Model\PersonalAccessTokenInterface;
+use TheBachtiarz\Auth\Interfaces\Models\PersonalAccessTokenInterface;
 use TheBachtiarz\Auth\Models\AbstractAuthUser;
 
 use function array_merge;

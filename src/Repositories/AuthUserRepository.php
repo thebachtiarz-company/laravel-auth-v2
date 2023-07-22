@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use TheBachtiarz\Auth\Models\AbstractAuthUser;
 use TheBachtiarz\Auth\Models\AuthUser;
-use TheBachtiarz\Auth\Traits\Attribute\UserModelAttributeTrait;
+use TheBachtiarz\Auth\Traits\Attributes\UserModelAttributeTrait;
 use TheBachtiarz\Base\App\Repositories\AbstractRepository;
 
 use function app;
@@ -42,21 +42,6 @@ class AuthUserRepository extends AbstractRepository
     }
 
     // ? Public Methods
-
-    /**
-     * Get by id
-     */
-    public function getById(int $id): AbstractAuthUser
-    {
-        $authUser = $this->getUserModel()::find($id);
-        assert($authUser instanceof AbstractAuthUser || $authUser === null);
-
-        if (! $authUser) {
-            throw new ModelNotFoundException(sprintf("User with id '%s' not found", $id));
-        }
-
-        return $authUser;
-    }
 
     /**
      * Get by identifier
@@ -102,16 +87,6 @@ class AuthUserRepository extends AbstractRepository
     }
 
     /**
-     * Delete by id
-     */
-    public function deleteById(int $id): bool
-    {
-        $authUser = $this->getById($id);
-
-        return $authUser?->delete();
-    }
-
-    /**
      * Delete by identifier
      */
     public function deleteByIdentifier(string $identifier): bool
@@ -122,6 +97,16 @@ class AuthUserRepository extends AbstractRepository
     }
 
     // ? Protected Methods
+
+    protected function getByIdErrorMessage(): string|null
+    {
+        return "User with id '%s' not found";
+    }
+
+    protected function createOrUpdateErrorMessage(): string|null
+    {
+        return 'Failed to %s user';
+    }
 
     // ? Private Methods
 

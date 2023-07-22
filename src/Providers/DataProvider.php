@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TheBachtiarz\Auth\Providers;
 
-use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
+use TheBachtiarz\Auth\Interfaces\Configs\AuthConfigInterface;
 use TheBachtiarz\Auth\Models\AuthUser;
 use TheBachtiarz\Base\BaseConfigInterface;
 

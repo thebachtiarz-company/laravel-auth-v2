@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use TheBachtiarz\Auth\Interfaces\Model\AuthUserInterface;
+use TheBachtiarz\Auth\Interfaces\Models\AuthUserInterface;
 
 return [
     /*

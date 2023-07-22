@@ -3,8 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use TheBachtiarz\Auth\Interfaces\Model\AuthUserInterface;
-use TheBachtiarz\Auth\Interfaces\Model\TokenResetInterface;
+use TheBachtiarz\Auth\Interfaces\Models\AuthUserInterface;
+use TheBachtiarz\Auth\Interfaces\Models\TokenResetInterface;
 
 return new class extends Migration
 {

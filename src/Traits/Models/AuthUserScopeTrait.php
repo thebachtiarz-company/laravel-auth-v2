@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TheBachtiarz\Auth\Traits\Model;
+namespace TheBachtiarz\Auth\Traits\Models;
 
 use Illuminate\Contracts\Database\Query\Builder as BuilderContract;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\DB;
+
+use function authidentifiermethod;
 
 /**
  * Auth User Scope Trait

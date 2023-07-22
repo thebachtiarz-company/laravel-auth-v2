@@ -9,13 +9,24 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
-use TheBachtiarz\Base\App\Interfaces\Model\AbstractModelInterface;
+use TheBachtiarz\Base\App\Interfaces\Models\AbstractModelInterface;
+
+use function count;
 
 abstract class AbstractAuthUser extends User implements AbstractModelInterface
 {
     use HasApiTokens;
     use Notifiable;
+
+    /**
+     * Define token expires at.
+     *
+     * example: \TheBachtiarz\Base\App\Helpers\CarbonHelper::dbGetFullDateAddHours(1) -> to add 1 hour after token created.
+     */
+    protected Carbon|null $tokenExpiresAt = null;
 
     // ? Public Methods
 
@@ -86,14 +97,39 @@ abstract class AbstractAuthUser extends User implements AbstractModelInterface
      */
     abstract public function scopeGetByIdentifier(EloquentBuilder|QueryBuilder $builder, string $identifier): BuilderContract;
 
+    /**
+     * Get entity by attribute
+     */
+    public function scopeGetByAttribute(
+        EloquentBuilder|QueryBuilder $builder,
+        string $column,
+        mixed $value,
+        string $operator = '=',
+    ): BuilderContract {
+        return $builder->where(
+            column: DB::raw("BINARY `$column`"),
+            operator: $operator,
+            value: $value,
+        );
+    }
+
     // ? Map Modules
 
     /**
-     * Auth user simple list map
+     * Get entity simple map
+     *
+     * @param array $attributes
      *
      * @return array
      */
-    abstract public function simpleListMap(): array;
+    public function simpleListMap(array $attributes = []): array
+    {
+        $this->makeHidden([
+            self::ATTRIBUTE_ID,
+            self::ATTRIBUTE_CREATEDAT,
+            self::ATTRIBUTE_UPDATEDAT,
+        ]);
 
-    // ? Relation Modules
+        return count($attributes) ? $this->only($attributes) : $this->toArray();
+    }
 }

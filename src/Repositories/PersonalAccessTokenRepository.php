@@ -11,7 +11,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\NewAccessToken;
-use TheBachtiarz\Auth\Interfaces\Model\PersonalAccessTokenInterface;
+use TheBachtiarz\Auth\Interfaces\Models\PersonalAccessTokenInterface;
 use TheBachtiarz\Auth\Models\AbstractAuthUser;
 use TheBachtiarz\Auth\Models\AuthUser;
 use TheBachtiarz\Auth\Models\PersonalAccessToken;
@@ -137,6 +137,16 @@ class PersonalAccessTokenRepository extends AbstractRepository
         $this->currentUser = authuser(app(AuthUser::class));
 
         return $this->currentUser;
+    }
+
+    protected function getByIdErrorMessage(): string|null
+    {
+        return "Token with id '%s' not found!";
+    }
+
+    protected function createOrUpdateErrorMessage(): string|null
+    {
+        return 'Failed to %s token';
     }
 
     // ? Private Methods

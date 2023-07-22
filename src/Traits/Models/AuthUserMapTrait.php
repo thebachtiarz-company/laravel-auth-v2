@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace TheBachtiarz\Auth\Traits\Model;
+namespace TheBachtiarz\Auth\Traits\Models;
 
-use TheBachtiarz\Auth\Interfaces\Model\AuthUserInterface;
+use TheBachtiarz\Auth\Interfaces\Models\AuthUserInterface;
 use TheBachtiarz\Auth\Models\AuthUser;
 use TheBachtiarz\Base\App\Helpers\CarbonHelper;
+
+use function authidentifiermethod;
 
 /**
  * Auth User Map Trait

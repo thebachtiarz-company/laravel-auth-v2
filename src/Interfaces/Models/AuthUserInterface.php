@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace TheBachtiarz\Auth\Interfaces\Model;
+namespace TheBachtiarz\Auth\Interfaces\Models;
 
-use TheBachtiarz\Base\App\Interfaces\Model\AbstractModelInterface;
+use TheBachtiarz\Base\App\Interfaces\Models\AbstractModelInterface;
 
 interface AuthUserInterface extends AbstractModelInterface
 {

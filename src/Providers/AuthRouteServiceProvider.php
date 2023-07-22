@@ -8,6 +8,8 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use TheBachtiarz\Base\AppConfigInterface;
 
+use function tbauthconfig;
+use function tbauthrestapipath;
 use function tbbaseconfig;
 
 class AuthRouteServiceProvider extends RouteServiceProvider

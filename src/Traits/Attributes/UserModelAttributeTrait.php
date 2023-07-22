@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TheBachtiarz\Auth\Traits\Attribute;
+namespace TheBachtiarz\Auth\Traits\Attributes;
 
 use TheBachtiarz\Auth\Models\AbstractAuthUser;
 

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Query\Builder as QueryBuilder;
-use TheBachtiarz\Auth\Interfaces\Model\TokenResetInterface;
+use TheBachtiarz\Auth\Interfaces\Models\TokenResetInterface;
 use TheBachtiarz\Auth\Models\TokenReset;
 use TheBachtiarz\Base\App\Repositories\AbstractRepository;
 
@@ -31,21 +31,6 @@ class TokenResetRepository extends AbstractRepository
     }
 
     // ? Public Methods
-
-    /**
-     * Get by id
-     */
-    public function getById(int $id): TokenResetInterface
-    {
-        $entity = TokenReset::find($id);
-        assert($entity instanceof TokenResetInterface);
-
-        if (! $entity) {
-            throw new ModelNotFoundException(sprintf("Token reset with id '%s' not found", $id));
-        }
-
-        return $entity;
-    }
 
     /**
      * Get by token
@@ -111,17 +96,6 @@ class TokenResetRepository extends AbstractRepository
     }
 
     /**
-     * Delete by id
-     */
-    public function deleteById(int $id): bool
-    {
-        $tokenReset = $this->getById($id);
-        assert($tokenReset instanceof Model);
-
-        return $tokenReset?->delete();
-    }
-
-    /**
      * Delete by token
      */
     public function deleteByToken(string $token): bool
@@ -148,6 +122,16 @@ class TokenResetRepository extends AbstractRepository
     }
 
     // ? Protected Methods
+
+    protected function getByIdErrorMessage(): string|null
+    {
+        return "Token reset with id '%s' not found";
+    }
+
+    protected function createOrUpdateErrorMessage(): string|null
+    {
+        return 'Failed to %s token reset';
+    }
 
     // ? Private Methods
 

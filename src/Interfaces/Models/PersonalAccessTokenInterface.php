@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace TheBachtiarz\Auth\Interfaces\Model;
+namespace TheBachtiarz\Auth\Interfaces\Models;
 
 use Illuminate\Support\Carbon;
-use TheBachtiarz\Base\App\Interfaces\Model\AbstractModelInterface;
+use TheBachtiarz\Base\App\Interfaces\Models\AbstractModelInterface;
 
 interface PersonalAccessTokenInterface extends AbstractModelInterface
 {
@@ -62,12 +62,12 @@ interface PersonalAccessTokenInterface extends AbstractModelInterface
     /**
      * Get last used at
      */
-    public function getLastUsedAt(): Carbon|null;
+    public function getLastUsedAt(): Carbon|string|null;
 
     /**
      * Get expires at
      */
-    public function getExpiresAt(): Carbon|null;
+    public function getExpiresAt(): Carbon|string|null;
 
     // ? Setter Modules
 
@@ -101,10 +101,10 @@ interface PersonalAccessTokenInterface extends AbstractModelInterface
     /**
      * Set last used at
      */
-    public function setLastUsedAt(Carbon $lastUsedAt): self;
+    public function setLastUsedAt(Carbon|string $lastUsedAt): self;
 
     /**
      * Set expires at
      */
-    public function setExpiresAt(Carbon $expiresAt): self;
+    public function setExpiresAt(Carbon|string $expiresAt): self;
 }

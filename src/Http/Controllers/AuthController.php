@@ -15,7 +15,7 @@ use TheBachtiarz\Auth\Http\Requests\Rules\TokenNameRule;
 use TheBachtiarz\Auth\Http\Requests\Rules\UserResetPasswordRule;
 use TheBachtiarz\Auth\Services\PersonalAccessTokenService;
 use TheBachtiarz\Auth\Services\TokenResetService;
-use TheBachtiarz\Base\App\Controllers\AbstractController;
+use TheBachtiarz\Base\App\Http\Controllers\AbstractController;
 
 class AuthController extends AbstractController
 {

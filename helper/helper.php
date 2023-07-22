@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
-use TheBachtiarz\Auth\Interfaces\Model\AuthUserInterface;
+use TheBachtiarz\Auth\Interfaces\Configs\AuthConfigInterface;
+use TheBachtiarz\Auth\Interfaces\Models\AuthUserInterface;
 use TheBachtiarz\Auth\Models\AbstractAuthUser;
 use TheBachtiarz\Auth\Models\AuthUser;
 

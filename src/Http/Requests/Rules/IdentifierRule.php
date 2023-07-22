@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace TheBachtiarz\Auth\Http\Requests\Rules;
 
-use TheBachtiarz\Auth\Interfaces\Model\AuthUserInterface;
-use TheBachtiarz\Base\App\Http\Requests\Rule\AbstractRule;
+use TheBachtiarz\Auth\Interfaces\Models\AuthUserInterface;
+use TheBachtiarz\Base\App\Http\Requests\Rules\AbstractRule;
 
 use function array_merge;
+use function authidentifiermethod;
 use function sprintf;
 
 class IdentifierRule extends AbstractRule

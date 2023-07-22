@@ -7,21 +7,22 @@ namespace TheBachtiarz\Auth\Services;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use TheBachtiarz\Auth\Interfaces\Model\AuthUserInterface;
-use TheBachtiarz\Auth\Interfaces\Model\TokenResetInterface;
+use TheBachtiarz\Auth\Interfaces\Models\AuthUserInterface;
+use TheBachtiarz\Auth\Interfaces\Models\TokenResetInterface;
 use TheBachtiarz\Auth\Models\AbstractAuthUser;
 use TheBachtiarz\Auth\Models\AuthUser;
 use TheBachtiarz\Auth\Models\TokenReset;
 use TheBachtiarz\Auth\Repositories\AuthUserRepository;
 use TheBachtiarz\Auth\Repositories\PersonalAccessTokenRepository;
 use TheBachtiarz\Auth\Repositories\TokenResetRepository;
-use TheBachtiarz\Auth\Traits\Attribute\UserModelAttributeTrait;
+use TheBachtiarz\Auth\Traits\Attributes\UserModelAttributeTrait;
 use TheBachtiarz\Base\App\Helpers\CarbonHelper;
 use TheBachtiarz\Base\App\Services\AbstractService;
 use Throwable;
 
 use function app;
 use function assert;
+use function authidentifiermethod;
 
 class TokenResetService extends AbstractService
 {
