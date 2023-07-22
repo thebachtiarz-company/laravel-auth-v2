@@ -8,6 +8,8 @@ use TheBachtiarz\Auth\Interfaces\Models\AuthUserInterface;
 use TheBachtiarz\Auth\Models\AuthUser;
 use TheBachtiarz\Base\App\Helpers\CarbonHelper;
 
+use function array_merge;
+use function array_unique;
 use function authidentifiermethod;
 
 /**
@@ -18,9 +20,11 @@ trait AuthUserMapTrait
     /**
      * Auth user simple list map
      *
+     * @param array $attributes
+     *
      * @return array
      */
-    public function simpleListMap(): array
+    public function simpleListMap(array $attributes = []): array
     {
         /** @var AuthUser $this */
 
@@ -43,6 +47,6 @@ trait AuthUserMapTrait
             AuthUserInterface::ATTRIBUTE_PASSWORD,
         ]);
 
-        return $this->only(attributes: $defaultAttributes);
+        return $this->only(attributes: array_unique(array_merge($defaultAttributes, $attributes)));
     }
 }

@@ -9,6 +9,7 @@ use TheBachtiarz\Auth\Models\PersonalAccessToken;
 use TheBachtiarz\Base\App\Helpers\CarbonHelper;
 
 use function array_merge;
+use function array_unique;
 
 /**
  * Personal Access Token Map Trait
@@ -20,7 +21,7 @@ trait PersonalAccessTokenMapTrait
      *
      * @return array
      */
-    public function simpleListMap(array|null $returnAttributes = []): array
+    public function simpleListMap(array $attributes = []): array
     {
         /** @var PersonalAccessToken $this */
 
@@ -52,6 +53,6 @@ trait PersonalAccessTokenMapTrait
             PersonalAccessTokenInterface::ATTRIBUTE_UPDATEDAT,
         ]);
 
-        return $this->only(attributes: array_merge($defaultAttributes, $returnAttributes));
+        return $this->only(attributes: array_unique(array_merge($defaultAttributes, $attributes)));
     }
 }

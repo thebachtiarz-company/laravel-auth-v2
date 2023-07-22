@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace TheBachtiarz\Auth\Repositories;
 
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\NewAccessToken;
@@ -57,10 +55,9 @@ class PersonalAccessTokenRepository extends AbstractRepository
     {
         $userAuthenticated = $this->getUserAuthenticated();
 
-        $builder = PersonalAccessToken::getByUser($userAuthenticated);
-        assert($builder instanceof EloquentBuilder || $builder instanceof QueryBuilder);
+        $this->modelBuilder(modelBuilder: PersonalAccessToken::getByUser($userAuthenticated));
 
-        return $builder->get();
+        return $this->modelBuilder()->get();
     }
 
     /**
@@ -70,10 +67,9 @@ class PersonalAccessTokenRepository extends AbstractRepository
     {
         $userAuthenticated = $this->getUserAuthenticated();
 
-        $builder = PersonalAccessToken::getByUserName($userAuthenticated, $tokenName);
-        assert($builder instanceof EloquentBuilder || $builder instanceof QueryBuilder);
+        $this->modelBuilder(modelBuilder: PersonalAccessToken::getByUserName($userAuthenticated, $tokenName));
 
-        return $builder?->first();
+        return $this->modelBuilder()->first();
     }
 
     /**

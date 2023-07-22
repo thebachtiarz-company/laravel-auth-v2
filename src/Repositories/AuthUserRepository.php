@@ -46,12 +46,14 @@ class AuthUserRepository extends AbstractRepository
     /**
      * Get by identifier
      */
-    public function getByIdentifier(string $identifier): AbstractAuthUser
+    public function getByIdentifier(string $identifier): AbstractAuthUser|null
     {
-        $authUser = $this->getUserModel()::getByIdentifier($identifier)->first();
+        $this->modelBuilder(modelBuilder: $this->getUserModel()::getByIdentifier($identifier));
+
+        $authUser = $this->modelBuilder()->first();
         assert($authUser instanceof AbstractAuthUser || $authUser === null);
 
-        if (! $authUser) {
+        if (! $authUser && $this->throwIfNullEntity()) {
             throw new ModelNotFoundException(sprintf("User with identifier '%s' not found", $identifier));
         }
 
@@ -92,6 +94,10 @@ class AuthUserRepository extends AbstractRepository
     public function deleteByIdentifier(string $identifier): bool
     {
         $authUser = $this->getByIdentifier($identifier);
+
+        if (! $authUser) {
+            throw new ModelNotFoundException('Failed to delete user');
+        }
 
         return $this->deleteById($authUser->getId());
     }
