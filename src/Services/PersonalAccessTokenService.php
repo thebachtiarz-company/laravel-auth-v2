@@ -20,6 +20,9 @@ use function assert;
 
 class PersonalAccessTokenService extends AbstractService
 {
+    /**
+     * Constructor
+     */
     public function __construct(
         protected PersonalAccessTokenRepository $personalAccessTokenRepository,
         protected AuthPolicy $authPolicy,

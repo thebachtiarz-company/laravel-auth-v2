@@ -23,7 +23,7 @@ trait UserModelAttributeTrait
      */
     public function getUserModel(): AbstractAuthUser|null
     {
-        return $this->userModel;
+        return $this->userModel ?? tbauthconfig('user_model_override');
     }
 
     // ? Setter Modules

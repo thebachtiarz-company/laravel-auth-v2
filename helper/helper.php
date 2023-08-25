@@ -30,7 +30,7 @@ if (! function_exists('authuser')) {
      */
     function authuser(AbstractAuthUser|null $abstractAuthUser = null): AbstractAuthUser|null
     {
-        $authClass = AuthUser::class;
+        $authClass = tbauthconfig('user_model_override') ?? AuthUser::class;
 
         if ($abstractAuthUser) {
             if ($abstractAuthUser->getId()) {
