@@ -8,6 +8,7 @@ use Illuminate\Contracts\Database\Query\Builder as BuilderContract;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\DB;
+use TheBachtiarz\Auth\Interfaces\Models\AuthUserInterface;
 
 use function authidentifiermethod;
 
@@ -17,12 +18,30 @@ use function authidentifiermethod;
 trait AuthUserScopeTrait
 {
     /**
+     * Get by code
+     */
+    public function scopeGetByCode(EloquentBuilder|QueryBuilder $builder, string $code): BuilderContract
+    {
+        $attribute = AuthUserInterface::ATTRIBUTE_CODE;
+
+        return $builder->where(
+            column: DB::raw("BINARY `$attribute`"),
+            operator: '=',
+            value: $code,
+        );
+    }
+
+    /**
      * Get by identifier
      */
     public function scopeGetByIdentifier(EloquentBuilder|QueryBuilder $builder, string $identifier): BuilderContract
     {
         $attribute = authidentifiermethod();
 
-        return $builder->where(DB::raw("BINARY `$attribute`"), $identifier);
+        return $builder->where(
+            column: DB::raw("BINARY `$attribute`"),
+            operator: '=',
+            value: $identifier,
+        );
     }
 }

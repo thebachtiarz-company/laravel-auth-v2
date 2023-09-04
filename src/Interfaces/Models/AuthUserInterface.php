@@ -17,12 +17,14 @@ interface AuthUserInterface extends AbstractModelInterface
      * Attribute fillable
      */
     public const ATTRIBUTE_FILLABLE = [
+        self::ATTRIBUTE_CODE,
         self::ATTRIBUTE_USERNAME,
         self::ATTRIBUTE_EMAIL,
         self::ATTRIBUTE_EMAIL_VERIFIED_AT,
         self::ATTRIBUTE_PASSWORD,
     ];
 
+    public const ATTRIBUTE_CODE              = 'code';
     public const ATTRIBUTE_USERNAME          = 'username';
     public const ATTRIBUTE_EMAIL             = 'email';
     public const ATTRIBUTE_EMAIL_VERIFIED_AT = 'email_verified_at';
@@ -30,7 +32,14 @@ interface AuthUserInterface extends AbstractModelInterface
 
     public const TEMP_UNHASHED_PASSWORD = 'authv2_unhashed_password';
 
+    public const USER_CODE_PREFIX = 'AuSrvT';
+
     // ? Getter Modules
+
+    /**
+     * Get code
+     */
+    public function getCode(): string|null;
 
     /**
      * Get identifier
@@ -55,6 +64,11 @@ interface AuthUserInterface extends AbstractModelInterface
     public function getTokenExpiresAt(): string|null;
 
     // ? Setter Modules
+
+    /**
+     * Set code
+     */
+    public function setCode(string $code): self;
 
     /**
      * Set identifier

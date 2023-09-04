@@ -40,6 +40,14 @@ class AuthUser extends AbstractAuthUser implements AuthUserInterface
     // ? Getter Modules
 
     /**
+     * Get code
+     */
+    public function getCode(): string|null
+    {
+        return $this->__get(self::ATTRIBUTE_CODE);
+    }
+
+    /**
      * Get identifier
      */
     public function getIdentifier(): string|null
@@ -74,6 +82,18 @@ class AuthUser extends AbstractAuthUser implements AuthUserInterface
     }
 
     // ? Setter Modules
+
+    /**
+     * Set code
+     *
+     * @return AuthUserInterface
+     */
+    public function setCode(string $code): self
+    {
+        $this->__set(self::ATTRIBUTE_CODE, $code);
+
+        return $this;
+    }
 
     /**
      * Set identifier

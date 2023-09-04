@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use TheBachtiarz\Auth\Interfaces\Models\AuthUserInterface;
+use TheBachtiarz\Auth\Models\AuthUser;
 
 return [
     /*
@@ -26,7 +27,7 @@ return [
     | Define new user model (as string).
     |
     */
-    'user_model_override' => null,
+    'user_model_override' => AuthUser::class,
 
     /*
     |--------------------------------------------------------------------------

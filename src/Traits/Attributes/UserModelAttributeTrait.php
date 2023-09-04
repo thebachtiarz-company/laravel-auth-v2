@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace TheBachtiarz\Auth\Traits\Attributes;
 
 use TheBachtiarz\Auth\Models\AbstractAuthUser;
+use TheBachtiarz\Auth\Models\AuthUser;
+
+use function app;
+use function tbauthconfig;
 
 /**
  * User Model Attribute Trait
@@ -23,7 +27,17 @@ trait UserModelAttributeTrait
      */
     public function getUserModel(): AbstractAuthUser|null
     {
-        return $this->userModel ?? tbauthconfig('user_model_override');
+        if (! $this->userModel) {
+            return $this->userModel;
+        }
+
+        $getOverride = tbauthconfig('user_model_override');
+
+        if (! $getOverride) {
+            return app($getOverride);
+        }
+
+        return new AuthUser();
     }
 
     // ? Setter Modules

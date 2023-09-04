@@ -44,6 +44,7 @@ trait AuthUserMapTrait
 
         $this->makeHidden([
             AuthUserInterface::ATTRIBUTE_ID,
+            AuthUserInterface::ATTRIBUTE_CODE,
             AuthUserInterface::ATTRIBUTE_PASSWORD,
         ]);
 

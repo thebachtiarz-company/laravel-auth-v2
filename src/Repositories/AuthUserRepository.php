@@ -44,6 +44,23 @@ class AuthUserRepository extends AbstractRepository
     // ? Public Methods
 
     /**
+     * Get by code
+     */
+    public function getByCode(string $code): AbstractAuthUser|null
+    {
+        $this->modelBuilder(modelBuilder: $this->getUserModel()::getByCode($code));
+
+        $authUser = $this->modelBuilder()->first();
+        assert($authUser instanceof AbstractAuthUser || $authUser === null);
+
+        if (! $authUser && $this->throwIfNullEntity()) {
+            throw new ModelNotFoundException(sprintf("User with code '%s' not found", $code));
+        }
+
+        return $authUser;
+    }
+
+    /**
      * Get by identifier
      */
     public function getByIdentifier(string $identifier): AbstractAuthUser|null

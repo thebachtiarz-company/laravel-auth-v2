@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create(AuthUserInterface::TABLE_NAME, function (Blueprint $table) {
             $table->id();
+            $table->string(AuthUserInterface::ATTRIBUTE_CODE)->unique();
             $table->string(AuthUserInterface::ATTRIBUTE_USERNAME)->nullable()->unique();
             $table->string(AuthUserInterface::ATTRIBUTE_EMAIL)->nullable()->unique();
             $table->timestamp(AuthUserInterface::ATTRIBUTE_EMAIL_VERIFIED_AT)->nullable();

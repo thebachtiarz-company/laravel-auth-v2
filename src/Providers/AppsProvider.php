@@ -6,7 +6,6 @@ namespace TheBachtiarz\Auth\Providers;
 
 use function app;
 use function assert;
-use function collect;
 use function config;
 
 class AppsProvider
@@ -25,7 +24,7 @@ class AppsProvider
         assert($_dataProvider instanceof DataProvider);
 
         foreach ($_dataProvider->registerConfig() as $key => $register) {
-            config(collect($register)->unique()->toArray());
+            config($register);
         }
     }
 }

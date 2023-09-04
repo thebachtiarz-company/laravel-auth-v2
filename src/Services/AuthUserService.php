@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use TheBachtiarz\Auth\Helpers\AuthUserHelper;
 use TheBachtiarz\Auth\Interfaces\Models\AuthUserInterface;
 use TheBachtiarz\Auth\Models\AbstractAuthUser;
 use TheBachtiarz\Auth\Models\AuthUser;
@@ -40,6 +41,7 @@ class AuthUserService extends AbstractService
     public function __construct(
         protected AuthUserRepository $authUserRepository,
         protected PersonalAccessTokenRepository $personalAccessTokenRepository,
+        protected AuthUserHelper $authUserHelper,
     ) {
         if (! $this->getUserModel()) {
             $this->setUserModel(app(AuthUser::class));
@@ -198,6 +200,8 @@ class AuthUserService extends AbstractService
     {
         $userPrepare = app(AuthUser::class);
         assert($userPrepare instanceof AuthUserInterface || $userPrepare instanceof AbstractAuthUser);
+
+        $userPrepare->setCode($this->authUserHelper->generateNewCode());
         $userPrepare->setIdentifier($identifier);
         $userPrepare->setPassword($password);
 
