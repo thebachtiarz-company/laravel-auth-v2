@@ -8,6 +8,7 @@ use TheBachtiarz\Auth\Models\AbstractAuthUser;
 use TheBachtiarz\Auth\Models\AuthUser;
 
 use function app;
+use function mb_strlen;
 use function tbauthconfig;
 
 /**
@@ -27,14 +28,16 @@ trait UserModelAttributeTrait
      */
     public function getUserModel(): AbstractAuthUser|null
     {
-        if (! $this->userModel) {
+        if ($this->userModel) {
             return $this->userModel;
         }
 
         $getOverride = tbauthconfig('user_model_override');
 
-        if (! $getOverride) {
-            return app($getOverride);
+        if (! ! @mb_strlen($getOverride ?? '')) {
+            $this->userModel = app($getOverride);
+
+            return $this->userModel;
         }
 
         return new AuthUser();
