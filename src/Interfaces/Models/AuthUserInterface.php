@@ -22,6 +22,7 @@ interface AuthUserInterface extends AbstractModelInterface
         self::ATTRIBUTE_EMAIL,
         self::ATTRIBUTE_EMAIL_VERIFIED_AT,
         self::ATTRIBUTE_PASSWORD,
+        self::ATTRIBUTE_REMEMBER_TOKEN,
     ];
 
     public const ATTRIBUTE_CODE              = 'code';
@@ -29,6 +30,7 @@ interface AuthUserInterface extends AbstractModelInterface
     public const ATTRIBUTE_EMAIL             = 'email';
     public const ATTRIBUTE_EMAIL_VERIFIED_AT = 'email_verified_at';
     public const ATTRIBUTE_PASSWORD          = 'password';
+    public const ATTRIBUTE_REMEMBER_TOKEN    = 'remember_token';
 
     public const TEMP_UNHASHED_PASSWORD = 'authv2_unhashed_password';
 

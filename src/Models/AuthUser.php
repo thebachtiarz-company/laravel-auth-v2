@@ -27,6 +27,7 @@ class AuthUser extends AbstractAuthUser implements AuthUserInterface
     {
         $this->setTable(self::TABLE_NAME);
         $this->fillable(self::ATTRIBUTE_FILLABLE);
+        $this->setHidden([self::ATTRIBUTE_PASSWORD, self::ATTRIBUTE_REMEMBER_TOKEN]);
 
         parent::__construct($attributes);
     }
