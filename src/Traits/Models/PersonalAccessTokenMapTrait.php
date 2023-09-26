@@ -34,7 +34,7 @@ trait PersonalAccessTokenMapTrait
 
         $this->setData(
             attribute: 'last_used',
-            value: CarbonHelper::anyConvDateToTimestamp(datetime: $this->getLastUsedAt()),
+            value: @$this->getLastUsedAt() ? CarbonHelper::anyConvDateToTimestamp(datetime: $this->getLastUsedAt()) : 'Never',
         )->setData(
             attribute: 'expired',
             value: @$this->getExpiresAt() ? CarbonHelper::anyConvDateToTimestamp(datetime: $this->getExpiresAt()) : 'Never',
